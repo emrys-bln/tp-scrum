@@ -1,0 +1,30 @@
+tp-scrum/
+│
+├── Dockerfile                  # Configuration de l'image Docker (Python 3.12-slim)
+├── requirements.txt            # Dépendances (Flask, PyMongo, dnspython, bcrypt)
+├── README.md                   # Documentation et structures des données (User, Ticket)
+├── app.py                      # Point d'entrée principal de l'application Flask
+├── database.py                 # Configuration et connexion centralisée à MongoDB
+│
+├── static/                     # Fichiers statiques (CSS, JS, images)
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── main.js
+│
+└── templates/                  # Vues HTML (Jinja2)
+    ├── base.html               # Layout principal (barre de navigation, flash messages)
+    ├── auth/
+    │   └── login.html          # Page de connexion unique
+    ├── admin/
+    │   └── dashboard.html      # Gestion des utilisateurs (CRUD, création de comptes)
+    ├── user/
+    │   ├── create_ticket.html  # Formulaire de création de ticket
+    │   └── history.html        # Historique des tickets de l'utilisateur avec filtres
+    └── technician/
+        ├── claim.html          # Page de réclamation (claim) des tickets "En attente"
+        ├── tracking.html       # Suivi du ticket et double validation (Client/Technicien)
+        └── history.html        # Historique des tickets pris en charge par le technicien
+
+
+Note : Cette architecture peut évoluer au cours du projet
