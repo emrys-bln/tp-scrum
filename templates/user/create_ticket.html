@@ -7,6 +7,13 @@
 </head>
 <body class="bg-light">
     <div class="container mt-5">
+        <!-- Bouton pour voir l'historique des tickets -->
+        <div class="row justify-content-center mb-3">
+            <div class="col-md-6 text-end">
+                <a href="{{ url_for('history.user_history') }}" class="btn btn-primary">Voir mon historique de tickets</a>
+            </div>
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card shadow">

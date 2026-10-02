@@ -2,6 +2,7 @@ from database import db
 from flask import Flask, jsonify
 from routes.ticket import ticket_bp  # Import du blueprint des tickets
 from routes.history import history_bp  # Import du blueprint de l'historique
+from routes.admin import admin_bp
 
 app = Flask(__name__)
 app.secret_key = (
@@ -11,6 +12,7 @@ app.secret_key = (
 # Enregistrement du Blueprint des tickets
 app.register_blueprint(ticket_bp)
 app.register_blueprint(history_bp)
+app.register_blueprint(admin_bp)
 
 
 @app.route("/")
