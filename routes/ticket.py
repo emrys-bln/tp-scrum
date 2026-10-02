@@ -45,12 +45,12 @@ def create_ticket():
     # Insertion dans la collection "tickets" de MongoDB
     db.tickets.insert_one(ticket_data)
 
-    return jsonify({
-        "success": True,
-        "message": (
-            "Ticket créé avec succès avec le statut initial 'Soumis'."
-        ),
-    })
+    # return jsonify({
+    #     "success": True,
+    #     "message": (
+    #         "Ticket créé avec succès avec le statut initial 'Soumis'."
+    #     ),
+    # })
 
   # Renvoie le formulaire HTML si on accède en GET
   return render_template("user/create_ticket.html")
