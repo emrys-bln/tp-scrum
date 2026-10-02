@@ -8,57 +8,94 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;750;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
   </head>
   <body class="bg-light">
-    {% from "_macros.html" import status_badge, validation_mark, filter_bar, count_strip %}
-    <main class="container py-4">
-      <h1 class="h3 mb-3">Mes tickets</h1>
-
-      {{ count_strip(counts, filters, 'tickets.user_history') }}
-      {{ filter_bar(filters, statuses, 'tickets.user_history') }}
-
-      {% if tickets %}
-      <div class="card">
-        <div class="table-responsive">
-          <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-              <tr>
-                <th>Créé le</th>
-                <th>Description</th>
-                <th>Technicien</th>
-                <th>Statut</th>
-                <th>Validation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for t in tickets %}
-              <tr>
-                <td class="text-nowrap">{{ t.created_at.strftime('%d/%m/%Y %H:%M') }}</td>
-                <td>
-                  <details>
-                    <summary>{{ t.description|truncate(90) }}</summary>
-                    <p class="mt-2 mb-1">{{ t.description }}</p>
-                    {% if t.technician_comment %}
-                    <p class="border-start border-3 border-primary ps-2 mb-0">
-                      <strong>Réponse du technicien :</strong> {{ t.technician_comment }}
-                    </p>
-                    {% endif %}
-                  </details>
-                </td>
-                <td>{{ t.technician_name or 'Pas encore pris en charge' }}</td>
-                <td>{{ status_badge(t.status) }}</td>
-                <td>
-                  {{ validation_mark(t.client_validation, 'Vous') }}
-                  {{ validation_mark(t.technician_validation, 'Technicien') }}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+    {% from "_macros.html" import status_badge, validation_mark, filter_bar,
+    count_strip %}
+    <main class="container history-shell py-4 py-md-5">
+      <div
+        class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4"
+      >
+        <div>
+          <h1 class="h3 history-heading mb-1">Mes tickets</h1>
+          <p class="history-subtitle mb-0">
+            Retrouvez l'état et le suivi de vos demandes.
+          </p>
         </div>
+        <a href="/tickets/create" class="btn btn-primary"
+          >Soumettre un ticket</a
+        >
+      </div>
+
+      {{ count_strip(counts, filters, 'history.user_history') }} {{
+      filter_bar(filters, statuses, 'history.user_history') }} {% if tickets %}
+      <div class="row g-4">
+        {% for t in tickets %}
+        <div class="col-12 col-lg-6">
+          <article class="ticket-card d-flex flex-column">
+            <div
+              class="ticket-card-header d-flex justify-content-between align-items-start gap-3 p-4"
+            >
+              <div>
+                <p class="ticket-date small mb-2">
+                  Créé le {{ t.created_at.strftime('%d/%m/%Y à %H:%M') }}
+                </p>
+                <h2 class="h5 mb-0">
+                  {{ t.title or (t.description|truncate(90)) }}
+                </h2>
+              </div>
+              {{ status_badge(t.status) }}
+            </div>
+            <div class="p-4 pt-3">
+              <details>
+                <summary class="fw-semibold text-primary">
+                  Voir la description
+                </summary>
+                <p class="ticket-description mt-3 mb-0">{{ t.description }}</p>
+                {% if t.technician_comment %}
+                <p class="ticket-response small mt-3 mb-0 p-3">
+                  <strong>Réponse du technicien :</strong> {{
+                  t.technician_comment }}
+                </p>
+                {% endif %}
+              </details>
+            </div>
+            <div class="ticket-meta mt-auto d-flex flex-wrap gap-4 p-4 pt-3">
+              <div>
+                <div class="ticket-label small mb-1">Technicien</div>
+                <div class="ticket-meta-value small fw-semibold">
+                  {{ t.technician_name or 'Pas encore pris en charge' }}
+                </div>
+              </div>
+              <div>
+                <div class="ticket-label small mb-1">Validation</div>
+                {{ validation_mark(t.client_validation, 'Vous') }} {{
+                validation_mark(t.technician_validation, 'Technicien') }}
+              </div>
+            </div>
+          </article>
+        </div>
+        {% endfor %}
       </div>
       {% else %}
-      <div class="alert alert-secondary">Aucun ticket ne correspond à ces critères.</div>
+      <div
+        class="empty-state d-flex flex-wrap justify-content-between align-items-center gap-2 p-4 mb-0"
+      >
+        <span>Aucun ticket ne correspond à ces critères.</span>
+        <a href="/tickets/create" class="btn btn-sm btn-primary"
+          >Soumettre un ticket</a
+        >
+      </div>
       {% endif %}
     </main>
   </body>

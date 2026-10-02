@@ -1,6 +1,6 @@
 {% macro status_badge(status) %}
   {% set cls = {'Soumis': 'text-bg-warning', 'En cours': 'text-bg-primary', 'Terminé': 'text-bg-success'}.get(status, 'text-bg-secondary') %}
-  <span class="badge {{ cls }}">{{ status }}</span>
+  <span class="badge status-pill {{ cls }}">{{ status }}</span>
 {% endmacro %}
 
 {% macro validation_mark(value, label) %}
@@ -19,11 +19,11 @@
 {% endmacro %}
 
 {% macro filter_bar(filters, statuses, endpoint) %}
-<form class="card card-body mb-3" method="get" action="{{ url_for(endpoint) }}">
+<form class="card card-body history-filter mb-4" method="get" action="{{ url_for(endpoint) }}">
   <div class="row g-2 align-items-end">
     <div class="col-12 col-md-4">
       <label class="form-label small mb-1" for="q">Recherche</label>
-      <input class="form-control" type="search" id="q" name="q" value="{{ filters.q }}" placeholder="Mot dans la description">
+      <input class="form-control" type="search" id="q" name="q" value="{{ filters.q }}" placeholder="Mot du titre ou de la description">
     </div>
     <div class="col-6 col-md-2">
       <label class="form-label small mb-1" for="status">Statut</label>

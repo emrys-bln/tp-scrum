@@ -1,0 +1,117 @@
+:root {
+  --history-ink: #243447;
+  --history-muted: #6d7b8b;
+  --history-line: #e5ebf1;
+  --history-soft: #f3f7fb;
+}
+
+body {
+  background: var(--history-soft) !important;
+  color: var(--history-ink);
+  font-family: "Manrope", "Segoe UI", sans-serif;
+  font-weight: 400;
+}
+
+.history-shell {
+  max-width: 1180px;
+}
+
+.history-heading {
+  letter-spacing: -0.02em;
+  font-weight: 800;
+}
+
+.history-subtitle {
+  color: var(--history-muted);
+  font-weight: 500;
+}
+
+.history-filter,
+.ticket-card {
+  border: 1px solid var(--history-line);
+  border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(45, 67, 88, 0.09);
+}
+
+.history-filter {
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.history-filter .form-label,
+.ticket-label {
+  color: var(--history-muted);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.history-filter .form-control,
+.history-filter .form-select {
+  font-weight: 500;
+}
+
+.ticket-card {
+  height: 100%;
+  background: #fff;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.ticket-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 34px rgba(45, 67, 88, 0.14);
+}
+
+.ticket-card-header {
+  border-bottom: 1px solid var(--history-line);
+}
+
+.ticket-card h2 {
+  font-weight: 750;
+  line-height: 1.3;
+}
+
+.ticket-date {
+  color: var(--history-muted);
+  font-weight: 600;
+}
+
+.ticket-description {
+  color: #405266;
+  font-weight: 450;
+  line-height: 1.65;
+  white-space: pre-line;
+}
+
+.ticket-response {
+  border-left: 3px solid #8eb5d4;
+  background: #f5f9fc;
+  color: #405266;
+  line-height: 1.55;
+}
+
+.ticket-response strong {
+  font-weight: 800;
+}
+
+.ticket-meta {
+  border-top: 1px solid var(--history-line);
+}
+
+.ticket-meta-value {
+  color: var(--history-ink);
+  font-weight: 700;
+}
+
+.status-pill {
+  border-radius: 999px;
+  font-weight: 700;
+  padding: 0.45rem 0.7rem;
+}
+
+.empty-state {
+  border: 1px dashed #b8c8d8;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+}
