@@ -1,0 +1,58 @@
+{% macro status_badge(status) %}
+  {% set cls = {'Soumis': 'text-bg-warning', 'En cours': 'text-bg-primary', 'Terminé': 'text-bg-success'}.get(status, 'text-bg-secondary') %}
+  <span class="badge status-pill {{ cls }}">{{ status }}</span>
+{% endmacro %}
+
+{% macro validation_mark(value, label) %}
+  <div class="small {{ 'text-success fw-semibold' if value else 'text-muted' }}">{{ label }} : {{ 'oui' if value else 'non' }}</div>
+{% endmacro %}
+
+{% macro count_strip(counts, filters, endpoint) %}
+<nav class="d-flex flex-wrap gap-2 mb-3" aria-label="Filtrer par statut">
+  {% for s, n in counts.items() %}
+    <a href="{{ url_for(endpoint, status=s) }}"
+       class="btn btn-sm {{ 'btn-dark' if filters.status == s else 'btn-outline-secondary' }}">
+      <strong>{{ n }}</strong> {{ s|lower }}
+    </a>
+  {% endfor %}
+</nav>
+{% endmacro %}
+
+{% macro filter_bar(filters, statuses, endpoint) %}
+<form class="card card-body history-filter mb-4" method="get" action="{{ url_for(endpoint) }}">
+  <div class="row g-2 align-items-end">
+    <div class="col-12 col-md-4">
+      <label class="form-label small mb-1" for="q">Recherche</label>
+      <input class="form-control" type="search" id="q" name="q" value="{{ filters.q }}" placeholder="Mot du titre ou de la description">
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label small mb-1" for="status">Statut</label>
+      <select class="form-select" id="status" name="status">
+        <option value="">Tous</option>
+        {% for s in statuses %}
+          <option value="{{ s }}" {{ 'selected' if filters.status == s }}>{{ s }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label small mb-1" for="date_from">Du</label>
+      <input class="form-control" type="date" id="date_from" name="date_from" value="{{ filters.date_from }}">
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label small mb-1" for="date_to">Au</label>
+      <input class="form-control" type="date" id="date_to" name="date_to" value="{{ filters.date_to }}">
+    </div>
+    <div class="col-6 col-md-2">
+      <label class="form-label small mb-1" for="sort">Tri</label>
+      <select class="form-select" id="sort" name="sort">
+        <option value="desc" {{ 'selected' if filters.sort == 'desc' }}>Récents d'abord</option>
+        <option value="asc" {{ 'selected' if filters.sort == 'asc' }}>Anciens d'abord</option>
+      </select>
+    </div>
+    <div class="col-12 d-flex gap-2">
+      <button type="submit" class="btn btn-primary">Filtrer</button>
+      <a href="{{ url_for(endpoint) }}" class="btn btn-link">Réinitialiser</a>
+    </div>
+  </div>
+</form>
+{% endmacro %}
