@@ -1,8 +1,10 @@
+import os
 from pymongo import MongoClient
 
-# URI de connexion MongoDB (local ou conteneurisé)
-MONGO_URI = "mongodb://localhost:27017/"
+# Récupère l'URI depuis les variables d'environnement, ou utilise localhost par défaut
+MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
+
 client = MongoClient(MONGO_URI)
 
-# Instance de la base de données
+# Nom de la base de données
 db = client["tp_scrum_db"]
